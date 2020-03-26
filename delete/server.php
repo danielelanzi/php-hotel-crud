@@ -11,7 +11,7 @@
   // controllo id
   // $sql = "SELECT FROM `stanze` WHERE `id` = $roomId";
   // $result = $conn->query($sql);
-  $result = getById($conn, `stanze`, $roomId);
+  $result = getById($conn, 'stanze', $roomId);
   // if ($result && $result->num_rows == 0) {
   //   die('NO ID');
   // }

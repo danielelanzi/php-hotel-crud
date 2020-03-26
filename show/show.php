@@ -1,5 +1,5 @@
 <?php
-  include "server.php";
+  include 'server.php';
   include __DIR__ . '/../partials/header.php';
  ?>
 
@@ -19,4 +19,4 @@
      </div>
    </div>
 
- <?php include __DIR__ . '/..partials/footer.php'; ?>
+ <?php include __DIR__ . '/../partials/footer.php'; ?>

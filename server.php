@@ -19,5 +19,5 @@
   // }
   // $conn->close();
 
-  $results = getAll($conn, `stanze`);
+  $results = getAll($conn, 'stanze');
  ?>

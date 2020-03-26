@@ -18,4 +18,5 @@ $roomId = $_GET['id'];
 // }
 // $conn->close();
 
-$room = getById($conn, `stanze`, $roomId);
+$room = getById($conn, 'stanze', $roomId);
+?>

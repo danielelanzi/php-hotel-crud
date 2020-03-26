@@ -1,43 +1,34 @@
 <?php
-  include_once __DIR__ . '/../env.php';
-  include __DIR__ . '/../database.php';
+include_once __DIR__ . '/../env.php';
+include __DIR__ . '/../database.php';
 
-  if (empty($_POST['room_number'])) {
-    die('NO NUMBER');
-  }
-  if (empty($_POST['beds'])) {
-    die('NO BEDS');
-  }
-  if (empty($_POST['floor'])) {
-    die('NO FLOOR');
-  }
+if (empty($_POST['beds'])) {
+  die('Non hai inserito il numero di letti');
+}
+if (empty($_POST['floor'])) {
+  die('Non hai inserito il piano');
+}
+if (empty($_POST['room_number'])) {
+  die('Non hai inserito il numero di stanza');
+}
 
-  $roomNumber = $_POST['room_number'];
-  $beds = $_POST['beds'];
-  $floor = $_POST['floor'];
+$beds = $_POST['beds'];
+$floor = $_POST['floor'];
+$roomNumber = $_POST['room_number'];
 
+// INSERT INTO table_name (column1, column2, column3, ...)
+// VALUES (value1, value2, value3, ...);
 
-  // id esistente viene creato
-  // $sql = "UPDATE `stanze` SET `room_number` = $roomNumber , `beds`= $beds , `floor` = $floor WHERE `id` = $roomId ";
-  $sql = "INSERT INTO `stanze` SET `room_number` = ?, `beds` = ?, `floor` = ?, `created_at` = NOW() `update_at` = NOW()";
+$sql = "INSERT INTO `stanze` (`beds`, `floor`, `room_number`, `created_at`, `updated_at`) VALUES (?,?,?, NOW(), NOW())";
 
-  // $sql = "INSERT INTO `stanze` SET (`room_number`, `beds`, `floor`, `created_at`, `update_at`) = VALUES(?, ?, ?, NOW(), NOW())";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iii", $beds, $floor, $roomNumber);
+$stmt->execute();
 
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("iii", $roomNumber, $beds, $floor);
-  $stmt->execute();
-  // var_dump($stmt); die();
+if (isset($stmt->insert_id)) {
+  header("Location: $basePath/show/show.php?id=$stmt->insert_id");
+} else {
+  echo 'KO';
+}
 
-  // $result = $conn->query($sql);
-
-  // if ($result = true) {
-  //   header("Location: $basePath/show/show.php?id=$roomId");
-  // }
-  if (isset($stmt->insert_id)) {
-    header("Location: $basePath/show/show.php?id=$stmt->insert_id");
-  } else {
-    echo "KO";
-  }
-  $conn->close();
-
- ?>
+$conn->close();
